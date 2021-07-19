@@ -1,5 +1,5 @@
 name: sukamiskin
-description: A new Flutter project.
+description: A new Flutter project to identify items using scan qr .
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -31,7 +31,9 @@ dependencies:
   http: ^0.13.3
   animated_splash_screen: ^1.1.0
   curved_navigation_bar: ^1.0.1
-  qr_code_scanner: 0.5.1
+  qrscan: ^0.3.2
+  permission_handler: ^8.1.3
+  google_fonts: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -42,7 +44,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
