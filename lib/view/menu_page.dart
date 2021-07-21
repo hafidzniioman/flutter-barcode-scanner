@@ -17,7 +17,7 @@ class _MenuPageState extends State<MenuPage> {
   final List<Widget> _pages = [
     ListBarang(),
     ListBarang(),
-    ScannerPage(),
+    QRpage(),
     ListBarang(),
     ListBarang(),
   ];
