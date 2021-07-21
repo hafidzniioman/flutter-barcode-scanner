@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -50,16 +51,33 @@ class _QRpageState extends State<QRpage> {
         ),
       );
 
-  Widget buildQrView(BuildContext context) => QRView(
+  Widget buildQrView(BuildContext context) {
+    var scanArea = (MediaQuery.of(context).size.width < 400 ||
+            MediaQuery.of(context).size.height < 400)
+        ? 250.0
+        : 400.0;
+    return QRView(
       key: qrKey,
       onQRViewCreated: onQRViewCreated,
       overlay: QrScannerOverlayShape(
         borderColor: Theme.of(context).accentColor,
         borderRadius: 10,
-        borderLength: 20,
+        borderLength: 30,
         borderWidth: 10,
-        cutOutSize: MediaQuery.of(context).size.width * 0.8,
-      ));
+        cutOutSize: scanArea,
+      ),
+      onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
+    );
+  }
+
+  void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
+    log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
+    if (!p) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('no Permission')),
+      );
+    }
+  }
 
   void onQRViewCreated(QRViewController controller) {
     setState(() {

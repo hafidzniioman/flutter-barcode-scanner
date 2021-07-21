@@ -38,7 +38,7 @@ class _ListBarangState extends State<ListBarang> {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Fetch Data Example'),
+          title: Text('BMN sukamiskin'),
         ),
         body: Center(
           child: FutureBuilder<List<dynamic>>(

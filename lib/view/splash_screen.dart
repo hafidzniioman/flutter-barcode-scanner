@@ -8,9 +8,11 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: AnimatedSplashScreen(
-          splash: Icons.archive_outlined,
-          nextScreen: MenuPage(),
-          splashTransition: SplashTransition.fadeTransition),
+        splash: Image.asset('assets/rem_bmn.jpg', width: 300, height: 250),
+        nextScreen: MenuPage(),
+        splashTransition: SplashTransition.fadeTransition,
+        backgroundColor: Colors.white,
+      ),
     );
   }
 }
