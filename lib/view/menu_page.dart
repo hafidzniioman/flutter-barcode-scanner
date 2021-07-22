@@ -15,11 +15,11 @@ class _MenuPageState extends State<MenuPage> {
   int _currentIndex = 0;
   GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
   final List<Widget> _pages = [
-    ListBarang(),
-    ListBarang(),
+    InventoryList(),
+    InventoryList(),
     QRpage(),
-    ListBarang(),
-    ListBarang(),
+    InventoryList(),
+    InventoryList(),
   ];
 
   @override
