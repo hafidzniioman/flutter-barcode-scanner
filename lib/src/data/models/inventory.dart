@@ -1,14 +1,16 @@
 class Inventory {
   final int id;
   final String nama;
-  final String kodeBarang;
-  final String noUrutPendaftaran;
+  final int kodeBarang;
+  final int noUrutPendaftaran;
   final String merk;
-  final String tahunPeroleh;
+  final int tahunPeroleh;
   final int jumlahBarang;
   final int satuanBarang;
   final String lokasi;
   final String image;
+  final String createdAt;
+  final String updatedAt;
 
   Inventory({
     required this.id,
@@ -21,6 +23,8 @@ class Inventory {
     required this.satuanBarang,
     required this.lokasi,
     required this.image,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   factory Inventory.fromJson(Map<String, dynamic> json) {
@@ -35,6 +39,8 @@ class Inventory {
       satuanBarang: json['satuan_barang'],
       lokasi: json['lokasi'],
       image: json['image'],
+      createdAt: json['created_at'],
+      updatedAt: json['updated_at'],
     );
   }
 }

@@ -9,7 +9,7 @@ class InventoryInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(inventoryDetail.nama)),
+      appBar: AppBar(title: Text('${inventoryDetail.nama}')),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -20,15 +20,15 @@ class InventoryInfo extends StatelessWidget {
 
   List<Widget> _renderBody(BuildContext context, Inventory inventoryDetail) {
     var result = <Widget>[];
-    result.add(_bannerImage(inventoryDetail.image, 170));
-    result.add(_renderinfo(context, inventoryDetail));
+    // result.add(_bannerImage(inventoryDetail.image, 170));
+    // result.add(_renderinfo(context, inventoryDetail));
     return result;
   }
 
   _renderinfo(BuildContext context, Inventory inventoryDetail) {
     var result = <Widget>[];
-    result.add(_sectionTitle(inventoryDetail.nama));
-    result.add(_sectionText(inventoryDetail.lokasi));
+    // result.add(_sectionTitle(inventoryDetail.nama));
+    // result.add(_sectionText(inventoryDetail.lokasi));
     return result;
   }
 
