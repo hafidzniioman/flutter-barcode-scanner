@@ -1,34 +1,31 @@
 import 'dart:developer';
 import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QRpage extends StatefulWidget {
-  const QRpage({Key? key}) : super(key: key);
 
   @override
   _QRpageState createState() => _QRpageState();
 }
 
 class _QRpageState extends State<QRpage> {
-  Barcode? barcode;
-  QRViewController? controller;
+  Barcode barcode;
+  QRViewController controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
   @override
   void reassemble() {
     super.reassemble();
     if (Platform.isAndroid) {
-      controller!.pauseCamera();
+      controller.pauseCamera();
     }
-    controller!.resumeCamera();
+    controller.resumeCamera();
   }
 
   @override
   void dispose() {
-    controller?.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -46,7 +43,7 @@ class _QRpageState extends State<QRpage> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8), color: Colors.white24),
         child: Text(
-          barcode != null ? 'Hasil Scan : ${barcode!.code}' : 'Scan a code',
+          barcode != null ? 'Hasil Scan : ${barcode.code}' : 'Scan a code',
           maxLines: 3,
         ),
       );

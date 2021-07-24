@@ -4,7 +4,7 @@ import 'package:sukamiskin/view/list_barang.dart';
 import 'package:sukamiskin/view/scanner_page.dart';
 
 class MenuPage extends StatefulWidget {
-  const MenuPage({Key? key}) : super(key: key);
+  const MenuPage({Key key}) : super(key: key);
 
   @override
   _MenuPageState createState() => _MenuPageState();
