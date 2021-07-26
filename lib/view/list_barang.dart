@@ -12,6 +12,16 @@ class InventoryList extends StatefulWidget {
 }
 
 class _InventoryListState extends State<InventoryList> {
+  Future<List<Inventory>> _getInventory() async {
+    final apiUrl = Uri.parse('http://inventory.hafidzniioman.com/api/product');
+    final response = await http.get(apiUrl);
+    var responseJson = json.decode(response.body);
+    print(response.body);
+    return (responseJson['data']['products'] as List)
+        .map((e) => Inventory.fromJson(e))
+        .toList();
+  }
+
   final List<Inventory> items = [];
 
   @override
@@ -23,66 +33,27 @@ class _InventoryListState extends State<InventoryList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: ListView.builder(
-            itemCount: this.items.length, itemBuilder: _listViewItemBuilder));
-  }
-
-  Widget _listViewItemBuilder(BuildContext context, int index) {
-    var inventoryDetail = this.items[index];
-    return ListTile(
-        contentPadding: EdgeInsets.all(10.0),
-        leading: _itemThumbnail(inventoryDetail),
-        title: _itemTitle(inventoryDetail),
-        onTap: () {
-          _navigationToInventoryDetail(context, inventoryDetail);
-        });
-  }
-
-  void _navigationToInventoryDetail(
-      BuildContext context, Inventory inventoryDetail) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return InventoryInfo(inventoryDetail);
-    }));
-  }
-
-  Widget _itemThumbnail(Inventory inventoryDetail) {
-    return Container(
-      constraints: BoxConstraints.tightFor(width: 100.0),
-      child: inventoryDetail.image == null
-          ? null
-          : Image.network(inventoryDetail.image, fit: BoxFit.fitWidth),
-    );
-  }
-
-  Widget _itemTitle(Inventory inventoryDetail) {
-    return Text(inventoryDetail.nama);
-  }
-
-  Future<Inventory> _getInventory() async {
-    final apiUrl = Uri.parse('http://inventory.hafidzniioman.com/api/product');
-    final response = await http.get(apiUrl);
-
-    if (response.statusCode == 200) {
-      return Inventory.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to load data');
-    }
-    // final Map<String, dynamic> responseData = json.decode(response.body);
-    // responseData['products'].forEach((inventoryDetail) {
-    //   final Inventory inventory = Inventory(
-    //       id: inventoryDetail['id'],
-    //       nama: inventoryDetail['nama'],
-    //       kodeBarang: inventoryDetail["kode_barang"],
-    //       noUrutPendaftaran: inventoryDetail["no_urut_pendaftaran"],
-    //       merk: inventoryDetail["merk"],
-    //       tahunPeroleh: inventoryDetail["tahun_peroleh"],
-    //       jumlahBarang: inventoryDetail["jumlah_barang"],
-    //       satuanBarang: inventoryDetail["satuan_barang"],
-    //       lokasi: inventoryDetail["lokasi"],
-    //       image: inventoryDetail["image"]);
-    //   setState(() {
-    //     items.add(inventory);
-    //   });
-    // });
+        appBar: AppBar(
+          title: Text("Fetch"),
+        ),
+        body: FutureBuilder<List<Inventory>>(
+            future: _getInventory(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                List<Inventory> inventory = snapshot.data;
+                return Column(
+                    children: inventory
+                        .map((e) => Column(
+                              children: <Widget>[
+                                Text(e.nama),
+                              ],
+                            ))
+                        .toList());
+              } else if (snapshot.hasError) {
+                print(snapshot.error);
+                return Text('${snapshot.error}');
+              }
+              return CircularProgressIndicator();
+            }));
   }
 }
