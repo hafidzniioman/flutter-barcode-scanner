@@ -53,7 +53,7 @@ class _MenuPageState extends State<MenuPage> {
         ],
         color: Colors.white,
         buttonBackgroundColor: Colors.white,
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.white10,
         animationCurve: Curves.easeInOut,
         animationDuration: Duration(milliseconds: 500),
         onTap: (index) {

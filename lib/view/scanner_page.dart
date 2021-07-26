@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QRpage extends StatefulWidget {
-
   @override
   _QRpageState createState() => _QRpageState();
 }
@@ -43,7 +42,7 @@ class _QRpageState extends State<QRpage> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8), color: Colors.white24),
         child: Text(
-          barcode != null ? 'Hasil Scan : ${barcode.code}' : 'Scan a code',
+          barcode != null ? '${barcode.code}' : 'Scan a code',
           maxLines: 3,
         ),
       );
@@ -85,5 +84,26 @@ class _QRpageState extends State<QRpage> {
         this.barcode = barcode;
       });
     });
+  }
+}
+
+class ResultScan extends StatefulWidget {
+  const ResultScan({Key key}) : super(key: key);
+
+  @override
+  _ResultScanState createState() => _ResultScanState();
+}
+
+class _ResultScanState extends State<ResultScan> {
+  Barcode barcode;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      child: Center(
+        child: Text(barcode != null ? '${barcode.code}' : 'Scan a code'),
+      ),
+    );
   }
 }
