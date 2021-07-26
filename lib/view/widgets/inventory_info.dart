@@ -19,16 +19,14 @@ class InventoryInfo extends StatelessWidget {
   }
 
   List<Widget> _renderBody(BuildContext context, Inventory inventoryDetail) {
-    // ignore: deprecated_member_use
-    var result = List<Widget>();
+    List<Widget> result = [];
     result.add(_bannerImage(inventoryDetail.gambar, 240));
     result.addAll(_renderinfo(context, inventoryDetail));
     return result;
   }
 
   List<Widget> _renderinfo(BuildContext context, Inventory inventoryDetail) {
-    // ignore: deprecated_member_use
-    var result = List<Widget>();
+    List<Widget> result = [];
     result.add(_sectionTitle(inventoryDetail.nama));
     result.add(_sectionText(inventoryDetail.merk));
     return result;
