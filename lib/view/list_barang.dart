@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
+
 import 'package:flutter/material.dart';
 import 'package:sukamiskin/src/data/models/inventory.dart';
 import 'package:sukamiskin/src/utils/styles.dart';
@@ -52,23 +54,54 @@ class _InventoryListState extends State<InventoryList> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: Text(
-          "List Inventory",
-          style: Styles.navBarTitle,
-        )),
-        body: Center(
-          child: FutureBuilder(
-              future: _futureInventory(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  List<Inventory> inventory = snapshot.data;
-                  return _itemListView(inventory);
-                } else if (snapshot.hasError) {
-                  print(snapshot.error);
-                  return Text('${snapshot.error}');
-                }
-                return CircularProgressIndicator();
-              }),
+            backgroundColor: Colors.white,
+            title: Text("Daftar BMN Sukamiskin",
+                style: TextStyle(color: Colors.black))),
+        body: CustomRefreshIndicator(
+          onRefresh: () {
+            return Future.delayed(Duration(seconds: 2));
+          },
+          builder: (BuildContext context, Widget child,
+              IndicatorController controller) {
+            return AnimatedBuilder(
+                animation: controller,
+                builder: (BuildContext context, _) {
+                  return Stack(
+                      alignment: Alignment.topCenter,
+                      children: <Widget>[
+                        if (!controller.isIdle)
+                          Positioned(
+                              top: 35.0 * controller.value,
+                              child: SizedBox(
+                                height: 30,
+                                width: 30,
+                                child: CircularProgressIndicator(
+                                  value: !controller.isLoading
+                                      ? controller.value.clamp(0.0, 1.0)
+                                      : null,
+                                ),
+                              )),
+                        Transform.translate(
+                          offset: Offset(0, 100.0 * controller.value),
+                          child: child,
+                        ),
+                      ]);
+                });
+          },
+          child: Center(
+            child: FutureBuilder(
+                future: _futureInventory(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<Inventory> inventory = snapshot.data;
+                    return _itemListView(inventory);
+                  } else if (snapshot.hasError) {
+                    print(snapshot.error);
+                    return Text('${snapshot.error}');
+                  }
+                  return CircularProgressIndicator();
+                }),
+          ),
         ));
   }
 
@@ -77,6 +110,8 @@ class _InventoryListState extends State<InventoryList> {
       itemCount: data.length,
       itemBuilder: (context, index) {
         return Card(
+            elevation: 5,
+            shadowColor: Colors.grey,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
             ),
@@ -98,24 +133,15 @@ class _InventoryListState extends State<InventoryList> {
                     title: Text("Nama : " + data[index].nama),
                     subtitle: Text("Merk : " + data[index].merk),
                   ),
-                  Container(
-                      width: 24,
-                      child: Text("Kode Barang : " +
-                          data[index].kodeBarang.toString())),
-                  Container(
-                      width: 24,
-                      child: Text("No Urut Pendaftaran : " +
-                          data[index].noUrutPendaftaran.toString())),
-                  Container(
-                      width: 24,
-                      child: Text("Tahun Peroleh : " +
-                          data[index].tahunPeroleh.toString())),
-                  Container(
-                      width: 24,
-                      child: Text("Jumlah Barang : " +
-                          data[index].jumlahBarang.toString())),
-                  Container(
-                      width: 24, child: Text("Lokasi : " + data[index].lokasi)),
+                  _textContainer(
+                      "Kode Barang : " + data[index].kodeBarang.toString()),
+                  _textContainer("No Urut Pendaftaran : " +
+                      data[index].noUrutPendaftaran.toString()),
+                  _textContainer(
+                      "Tahun Peroleh : " + data[index].tahunPeroleh.toString()),
+                  _textContainer(
+                      "Jumlah Barang : " + data[index].jumlahBarang.toString()),
+                  _textContainer("Lokasi : " + data[index].lokasi),
                   // Text(data[index])
                 ],
               ),
@@ -124,13 +150,13 @@ class _InventoryListState extends State<InventoryList> {
     );
   }
 
-  Widget _listViewItemBuilder(BuildContext context, int index) {
-    var itemDetail = this.items[index];
-    return ListTile(
-      contentPadding: EdgeInsets.all(10),
-      onTap: () {
-        _navigationToInventoryDetail(context, itemDetail);
-      },
+  Widget _textContainer(String content) {
+    return Container(
+      width: 48,
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(content),
+      ),
     );
   }
 
