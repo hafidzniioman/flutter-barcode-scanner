@@ -4,7 +4,6 @@ import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 
 import 'package:flutter/material.dart';
 import 'package:sukamiskin/src/data/models/inventory.dart';
-import 'package:sukamiskin/src/utils/styles.dart';
 import 'package:sukamiskin/view/widgets/inventory_info.dart';
 
 class InventoryList extends StatefulWidget {
@@ -25,24 +24,6 @@ class _InventoryListState extends State<InventoryList> {
         .map((e) => Inventory.fromJson(e))
         .toList();
   }
-
-  void getInventory() async {
-    final response = await http.get(apiUrl);
-    final Map<String, dynamic> responseData = json.decode(response.body);
-    print(response.body);
-    responseData['data']['products'].forEach((inventoryDetail) {
-      final Inventory inventory = Inventory(
-          nama: inventoryDetail['nama'],
-          merk: inventoryDetail['merk'],
-          lokasi: inventoryDetail['lokasi'],
-          gambar: inventoryDetail['gambar']);
-      setState(() {
-        items.add(inventory);
-      });
-    });
-  }
-
-  final List<Inventory> items = [];
 
   @override
   void initState() {
@@ -129,20 +110,29 @@ class _InventoryListState extends State<InventoryList> {
                     child: Image.network(urlImage + data[index].gambar,
                         height: 150, fit: BoxFit.fitHeight),
                   ),
-                  ListTile(
-                    title: Text("Nama : " + data[index].nama),
-                    subtitle: Text("Merk : " + data[index].merk),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        color: Colors.blueGrey),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        _textContainer(
+                            "Nama Barang : " + data[index].nama.toString()),
+                        _textContainer("Merk : " + data[index].merk.toString()),
+                        _textContainer("Kode Barang : " +
+                            data[index].kodeBarang.toString()),
+                        _textContainer("No Urut Pendaftaran : " +
+                            data[index].noUrutPendaftaran.toString()),
+                        _textContainer("Tahun Peroleh : " +
+                            data[index].tahunPeroleh.toString()),
+                        _textContainer("Jumlah Barang : " +
+                            data[index].jumlahBarang.toString()),
+                        _textContainer("Lokasi : " + data[index].lokasi),
+                      ],
+                    ),
                   ),
-                  _textContainer(
-                      "Kode Barang : " + data[index].kodeBarang.toString()),
-                  _textContainer("No Urut Pendaftaran : " +
-                      data[index].noUrutPendaftaran.toString()),
-                  _textContainer(
-                      "Tahun Peroleh : " + data[index].tahunPeroleh.toString()),
-                  _textContainer(
-                      "Jumlah Barang : " + data[index].jumlahBarang.toString()),
-                  _textContainer("Lokasi : " + data[index].lokasi),
-                  // Text(data[index])
                 ],
               ),
             ));
@@ -152,10 +142,9 @@ class _InventoryListState extends State<InventoryList> {
 
   Widget _textContainer(String content) {
     return Container(
-      width: 48,
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Text(content),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(8.0, 2.0, 2.0, 2.0),
+        child: Text(content, style: TextStyle(color: Colors.white)),
       ),
     );
   }
