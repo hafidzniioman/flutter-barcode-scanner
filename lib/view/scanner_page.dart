@@ -31,10 +31,22 @@ class _QRpageState extends State<QRpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(alignment: Alignment.center, children: <Widget>[
-      buildQrView(context),
-      Positioned(bottom: 20, child: buildResult()),
-    ]));
+        //     body: Stack(alignment: Alignment.center, children: <Widget>[
+        //   buildQrView(context),
+        //   Positioned(bottom: 20, child: buildResult()),
+        // ])
+        body: Column(
+      children: <Widget>[
+        Expanded(flex: 5, child: buildQrView(context)),
+        Expanded(
+            flex: 1,
+            child: Center(
+              child: Text(
+                barcode != null ? '${barcode.code}' : 'Scan a code',
+              ),
+            ))
+      ],
+    ));
   }
 
   Widget buildResult() => Container(

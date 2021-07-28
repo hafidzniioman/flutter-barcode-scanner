@@ -33,4 +33,15 @@ class Inventory {
       gambar: json['image'],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'nama': nama,
+        'kode_barang': kodeBarang,
+        'no_urut_pendaftaran': noUrutPendaftaran,
+        'merk': merk,
+        'tahun_peroleh': tahunPeroleh,
+        'jumlah_barang': jumlahBarang,
+        'lokasi': lokasi,
+        'image': gambar,
+      };
 }
