@@ -88,6 +88,7 @@ class _InventoryListState extends State<InventoryList> {
 
   ListView _itemListView(data) {
     return ListView.builder(
+      reverse: true,
       itemCount: data.length,
       itemBuilder: (context, index) {
         return Card(
@@ -98,7 +99,7 @@ class _InventoryListState extends State<InventoryList> {
             ),
             child: InkWell(
               onTap: () {
-                _navigationToInventoryDetail(context, data[index].id);
+                _navigationToInventoryDetail(context, data[index]);
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -123,13 +124,6 @@ class _InventoryListState extends State<InventoryList> {
                         _textContainer("Merk : " + data[index].merk.toString()),
                         _textContainer("Kode Barang : " +
                             data[index].kodeBarang.toString()),
-                        _textContainer("No Urut Pendaftaran : " +
-                            data[index].noUrutPendaftaran.toString()),
-                        _textContainer("Tahun Peroleh : " +
-                            data[index].tahunPeroleh.toString()),
-                        _textContainer("Jumlah Barang : " +
-                            data[index].jumlahBarang.toString()),
-                        _textContainer("Lokasi : " + data[index].lokasi),
                       ],
                     ),
                   ),
