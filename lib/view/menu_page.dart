@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:sukamiskin/view/create_item.dart';
 import 'package:sukamiskin/view/list_barang.dart';
 import 'package:sukamiskin/view/scanner_page.dart';
+import 'package:sukamiskin/view/screen_account.dart';
+import 'package:sukamiskin/view/screen_delete_inventory.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({Key key}) : super(key: key);
@@ -15,11 +18,11 @@ class _MenuPageState extends State<MenuPage> {
   int _currentIndex = 0;
   GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
   final List<Widget> _pages = [
-    InventoryList(),
+    CreateScreenInventory(),
     InventoryList(),
     QRpage(),
-    InventoryList(),
-    InventoryList(),
+    DeleteScreenInventory(),
+    AccountScreen(),
   ];
 
   @override
