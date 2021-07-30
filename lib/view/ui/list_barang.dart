@@ -1,9 +1,8 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 
 import 'package:flutter/material.dart';
 import 'package:sukamiskin/src/data/models/inventory.dart';
+import 'package:sukamiskin/src/services/api_service.dart';
 import 'package:sukamiskin/view/widgets/inventory_info.dart';
 
 class InventoryList extends StatefulWidget {
@@ -14,21 +13,12 @@ class InventoryList extends StatefulWidget {
 }
 
 class _InventoryListState extends State<InventoryList> {
-  final apiUrl = Uri.parse('http://inventory.hafidzniioman.com/api/product');
-  final String urlImage = "http://inventory.hafidzniioman.com/product/";
-
-  Future<List<Inventory>> _futureInventory() async {
-    final response = await http.get(apiUrl);
-    var responseJson = json.decode(response.body);
-    return (responseJson['data']['products'] as List)
-        .map((e) => Inventory.fromJson(e))
-        .toList();
-  }
+  ApiService apiService;
 
   @override
   void initState() {
     super.initState();
-    _futureInventory();
+    apiService = ApiService();
   }
 
   @override
@@ -71,7 +61,7 @@ class _InventoryListState extends State<InventoryList> {
           },
           child: Center(
             child: FutureBuilder(
-                future: _futureInventory(),
+                future: apiService.retrieveInventory(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     List<Inventory> inventory = snapshot.data;
@@ -108,7 +98,7 @@ class _InventoryListState extends State<InventoryList> {
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(8),
                         topRight: Radius.circular(8)),
-                    child: Image.network(urlImage + data[index].gambar,
+                    child: Image.network(apiService.urlImage + data[index].gambar,
                         height: 150, fit: BoxFit.fitHeight),
                   ),
                   Container(

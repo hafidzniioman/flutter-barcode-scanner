@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:sukamiskin/view/create_item.dart';
-import 'package:sukamiskin/view/list_barang.dart';
-import 'package:sukamiskin/view/scanner_page.dart';
-import 'package:sukamiskin/view/screen_account.dart';
-import 'package:sukamiskin/view/screen_delete_inventory.dart';
+import 'package:sukamiskin/view/ui/create_item.dart';
+import 'package:sukamiskin/view/ui/list_barang.dart';
+import 'package:sukamiskin/view/ui/scanner_page.dart';
+import 'package:sukamiskin/view/ui/screen_account.dart';
+import 'package:sukamiskin/view/ui/screen_delete_inventory.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({Key key}) : super(key: key);
