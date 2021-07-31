@@ -1,9 +1,8 @@
-import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
-
 import 'package:flutter/material.dart';
 import 'package:sukamiskin/src/data/models/inventory.dart';
 import 'package:sukamiskin/src/services/api_service.dart';
 import 'package:sukamiskin/view/widgets/inventory_info.dart';
+import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 
 class InventoryList extends StatefulWidget {
   const InventoryList({Key key}) : super(key: key);
