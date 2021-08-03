@@ -84,14 +84,40 @@ class _QRpageState extends State<QRpage> {
   }
 
   void onQRViewCreated(QRViewController controller) {
-    setState(() {
-      this.controller = controller;
-    });
+    // setState(() {
+    //   this.controller = controller;
+    // });
+    // controller.scannedDataStream.listen((barcode) {
+    //   setState(() {
+    //     this.barcode = barcode;
+    //   });
+    // });
+
+    this.controller = controller;
+    bool scanned = false;
     controller.scannedDataStream.listen((barcode) {
-      setState(() {
-        this.barcode = barcode;
-      });
+      if (!scanned) {
+        scanned = true;
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => SecondRoute()));
+      }
     });
+  }
+}
+
+class SecondRoute extends StatefulWidget {
+  const SecondRoute({Key key}) : super(key: key);
+
+  @override
+  _SecondRouteState createState() => _SecondRouteState();
+}
+
+class _SecondRouteState extends State<SecondRoute> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Text('data'),
+    );
   }
 }
 
